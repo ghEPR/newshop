@@ -123,7 +123,7 @@
                                     [/@brand_list]
                                 </div>
                                 <div>
-                                    [@promotion_list productCagetoryId = productCategory.id]
+                                    [@promotion_list productCagetoryId = productCategory.id limit = 10]
                                         [#if promotions?has_content]
                                             <strong>热门促销</strong>
                                             [#list promotions as promotion]

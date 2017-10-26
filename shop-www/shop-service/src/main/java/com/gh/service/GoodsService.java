@@ -20,14 +20,19 @@ public class GoodsService {
 
     public List<Goods> findHotGoods(Integer categoryId, Integer tagId, Integer limit ){
 
-        AssertUtil.intIsNotEmpty(categoryId);
         AssertUtil.intIsNotEmpty(tagId);
 
         if (null == limit) {
             limit = Constant.TEN;
         }
 
-        List<Goods> goods = goodsDao.findHotGoods(categoryId, tagId, limit);
+        List<Goods> goods = null;
+
+        if (null != categoryId && categoryId > 1) {
+            goods = goodsDao.findHotGoods(categoryId, tagId, limit);
+        } else {
+            goods = goodsDao.findHotGoodsByTagId(tagId,limit);
+        }
 
         return goods;
 

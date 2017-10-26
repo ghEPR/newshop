@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface GoodsDao {
 
-    @Select("SELECT g.id, g.NAME, g.caption, g.image, g.price FROM xx_goods g LEFT JOIN xx_product_category pc " +
+    @Select("SELECT g.id, g.name, g.caption, g.image, g.price FROM xx_goods g LEFT JOIN xx_product_category pc " +
             "ON g.product_category = pc.id LEFT JOIN xx_goods_tag gt " +
             "ON gt.goods = g.id WHERE pc.tree_path LIKE ',${categoryId},%' " +
             "AND gt.tags = #{tagId} AND g.is_marketable=1 LIMIT #{count}")
@@ -21,4 +21,11 @@ public interface GoodsDao {
                              @Param(value = "tagId") Integer tagId,
                              @Param(value = "count") Integer count);
 
+
+    @Select("SELECT g.id, g.name, g.caption, g.image, g.price, g.market_price FROM xx_goods g " +
+            "LEFT JOIN xx_goods_tag gt ON gt.goods = g.id " +
+            "WHERE gt.tags = #{tagId} AND g.is_marketable = 1 " +
+            "LIMIT #{count}")
+    List<Goods> findHotGoodsByTagId(@Param(value = "tagId") Integer tagId,
+                                    @Param(value = "count") Integer count);
 }
