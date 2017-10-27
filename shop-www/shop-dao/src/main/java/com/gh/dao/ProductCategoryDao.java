@@ -29,4 +29,6 @@ public interface ProductCategoryDao {
     List<ProductCategory> findChildrenList(@Param(value = "parentId") Integer parentId,
                                            @Param(value = "count") Integer count);
 
+    @Select("SELECT id,name,grade,parent FROM xx_product_category WHERE id = #{id}")
+    ProductCategory findTreePathById(@Param(value = "id") Integer categoryId);
 }

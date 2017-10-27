@@ -26,7 +26,7 @@ public class PromotionListDirective extends BaseDirective{
     public void execute(Environment env, Map params, TemplateModel[] loopVars,
                         TemplateDirectiveBody body) throws TemplateException, IOException {
 
-        Integer productCagetoryId = getParams(params, "promotions", Integer.class);
+        Integer productCagetoryId = getParams(params, "productCagetoryId", Integer.class);
         Integer limit = getParams(params, "limit", Integer.class);
 
         List<Promotion> promotions = promotionService.findProductCategoryPromotions(productCagetoryId,limit);

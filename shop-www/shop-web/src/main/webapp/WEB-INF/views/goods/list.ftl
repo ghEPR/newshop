@@ -212,7 +212,7 @@
 </head>
 <body>
 
-[#include "include/header.ftl"]
+[#include "../include/header.ftl"]
 
 <div class="container goodsList">
     <div class="row">
@@ -277,7 +277,7 @@
             <div class="hotPromotion">
                 <dl>
                     <dt>热销促销</dt>
-                    [@promotion_list count=3 productCategoryId=productCategory.id]
+                    [@promotion_list limit = 3 productCategoryId=productCategory.id]
                         [#if promotions?has_content]
                             [#list promotions as promotion ]
                                 <dd>

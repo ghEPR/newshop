@@ -195,7 +195,7 @@
 </head>
 <body>
 
-[#include "include/header.ftl"]
+[#include "../include/header.ftl"]
 
 <div class="container goodsList">
     <div class="row">
@@ -282,13 +282,13 @@
                     <li>
                         <a href="${ctx}/index">首页</a>
                     </li>
-                    [#if goodsDto.keyword?? && goodsDto.keyword?trim?length>0]
-                        <li>搜索 &quot;${goodsDto.keyword}&quot; 结果列表</li>
+                    [#if keyword??]
+                        <li>搜索 &quot;${keyword}&quot; 结果列表</li>
                     [/#if]
                 </ul>
             </div>
             <form id="goodsForm" action="${ctx}/goods/search" method="get">
-                <input type="hidden" id="keyword" name="keyword" value="${goodsDto.keyword}" />
+                <input type="hidden" id="keyword" name="keyword" value="${keyword}" />
                 <input type="hidden" id="orderType" name="sort" value="${goodsDto.sort}" />
                 <input type="hidden" id="pageNumber" name="page" value="${goodsDto.page}" />
                 <input type="hidden" id="pageSize" name="pageSize" value="${goodsDto.pageSize}" />
@@ -302,17 +302,17 @@
                             <span>&nbsp;</span>
                         </a>
                         <label>数量:</label>
-                        <a href="javascript:;" class="size[#if paginator.limit == 20] current[/#if]" pageSize="20">
+                        <a href="javascript:;" class="size [#if paginator.limit == 20]current[/#if]" pageSize="20">
                             <span>20</span>
                         </a>
-                        <a href="javascript:;" class="size[#if paginator.limit == 40] current[/#if]" pageSize="40">
+                        <a href="javascript:;" class="size [#if paginator.limit == 40] current[/#if]" pageSize="40">
                             <span>40</span>
                         </a>
-                        <a href="javascript:;" class="size[#if paginator.limit == 80] current[/#if]" pageSize="80">
+                        <a href="javascript:;" class="size [#if paginator.limit == 80] current[/#if]" pageSize="80">
                             <span>80</span>
                         </a>
                         <span class="page">
-                            [#if paginator.totalCount > 0]
+                            [#if paginator.totalPages >1]
                                 <label>共${paginator.totalCount}个商品 ${paginator.page}/${paginator.totalPages}</label>
                                 [#if paginator.hasPrePage]
                                     <a href="javascript:;" id="previousPage" class="previousPage">
@@ -329,7 +329,7 @@
                     </div>
                     <div id="sort" class="sort">
                         <div id="orderMenu" class="orderMenu">
-                            <span>${selectedSort}</span>
+                            <span>${showSortType}</span>
                             <ul>
                                 <li orderType="">请选择</li>
                                 [#list sorts as orderType]
@@ -346,9 +346,9 @@
                         <a href="javascript:;" class="asc[#if goodsDto.sort == 'price.asc'] current[/#if]" orderType="price.asc">价格</a>
                         <a href="javascript:;" class="desc[#if goodsDto.sort == 'sales.desc'] current[/#if]" orderType="sales.desc">销量</a>
                         <a href="javascript:;" class="desc[#if goodsDto.sort == 'score.desc'] current[/#if]" orderType="score.desc">评分</a>
-                        <input type="text" id="startPrice" name="startPrice" class="startPrice" maxlength="16" title="价格过滤最低价格" onpaste="return false" />
+                        <input type="text" id="startPrice" name="startPrice" class="startPrice" value="${goodsDto.getStartPrice()}" maxlength="16" title="价格过滤最低价格" onpaste="return false" />
                         <label>-</label>
-                        <input type="text" id="endPrice" name="endPrice" class="endPrice" maxlength="16" title="价格过滤最高价格" onpaste="return false" />
+                        <input type="text" id="endPrice" name="endPrice" class="endPrice" value="${goodsDto.getEndPrice()}" maxlength="16" title="价格过滤最高价格" onpaste="return false" />
                         <button type="submit">确 定</button>
                     </div>
                 </div>
@@ -423,6 +423,6 @@
     </div>
 </div>
 
-[#include "include/footer.ftl"]
+[#include "../include/footer.ftl"]
 </body>
 </html>

@@ -26,11 +26,11 @@ public class GoodsListDirective extends BaseDirective {
     public void execute(Environment env, Map params, TemplateModel[] loopVars,
                         TemplateDirectiveBody body) throws TemplateException, IOException {
 
-        Integer categoryId = getParams(params, "categoryId", Integer.class);
+        Integer productCategoryId = getParams(params, "productCategoryId", Integer.class);
         Integer tagId = getParams(params, "tagId", Integer.class);
         Integer limit = getParams(params, "limit", Integer.class);
 
-        List<Goods> goods = goodsService.findHotGoods(categoryId, tagId, limit);
+        List<Goods> goods = goodsService.findHotGoods(productCategoryId, tagId, limit);
 
         setVariable(env,body,"goods",goods);
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.gh.dao.GoodsDao" >
+
+    <select id="selectForPage" resultType="com.gh.vo.GoodsVo" >
+        SELECT
+            g.id,
+            g.`name`,
+            g.caption,
+            g.price,
+            g.image,
+            g.market_price,
+            g.is_top,
+            g.create_date,
+            g.sales,
+            g.score
+        FROM
+          xx_goods g
+        WHERE
+          is_marketable = 1
+
+        <if test="@Ognl@isNotEmpty(keyword)" >
+            AND (g.name like '%${keyword}%'
+            or keyword LIKE '%${keyword}%'
+            or caption LIKE '%${keyword}%'
+            or introduction LIKE '%${keyword}%'
+            )
+        </if>
+        <if test="@Ognl@isNotEmpty(startPrice)" >
+            AND price >= #{startPrice}
+        </if>
+        <if test="@Ognl@isNotEmpty(endPrice)" >
+            AND price &lt;= #{endPrice}
+        </if>
+
+    </select>
+
+    <select id="findByProductcategroyId" resultType="com.gh.vo.GoodsVo" >
+        SELECT
+            g.id,
+            g.`name`,
+            g.caption,
+            g.price,
+            g.image,
+            g.market_price,
+            g.is_top,
+            g.create_date,
+            g.sales,
+            g.score
+        FROM
+          xx_goods g LEFT JOIN xx_product_category p on g.product_category = p.id
+        WHERE
+          is_marketable = 1 AND (p.tree_path LIKE '${treePath}%' OR p.id = #{productCategoryId})
+        <if test="@Ognl@isNotEmpty(keyword)" >
+            AND (g.name like '%${keyword}%'
+            or keyword LIKE '%${keyword}%'
+            or caption LIKE '%${keyword}%'
+            or introduction LIKE '%${keyword}%'
+            )
+        </if>
+        <if test="@Ognl@isNotEmpty(startPrice)" >
+            AND price >= #{startPrice}
+        </if>
+        <if test="@Ognl@isNotEmpty(endPrice)" >
+            AND price &lt;= #{endPrice}
+        </if>
+
+    </select>
+
+</mapper>

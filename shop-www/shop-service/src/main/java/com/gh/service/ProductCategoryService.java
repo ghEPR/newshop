@@ -45,4 +45,13 @@ public class ProductCategoryService {
 
     }
 
+    public ProductCategory findTreePathById(Integer categoryId) {
+
+        AssertUtil.intIsNotEmpty(categoryId);
+
+        ProductCategory productCategory = productCategoryDao.findTreePathById(categoryId);
+
+        return productCategory;
+
+    }
 }
